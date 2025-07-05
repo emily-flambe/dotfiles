@@ -6,8 +6,9 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DOTFILES_DIR="$(dirname "$SCRIPT_DIR")"
 KITTY_CONFIG_DIR="$HOME/.config/kitty"
-KITTY_PROJECT_DIR="$SCRIPT_DIR/kitty"
+KITTY_PROJECT_DIR="$DOTFILES_DIR/kitty"
 
 echo "Syncing kitty configuration from local to project..."
 
