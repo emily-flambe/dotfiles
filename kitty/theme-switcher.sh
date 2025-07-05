@@ -20,58 +20,42 @@ switch_kitty_theme() {
     # Define directory -> theme mappings
     case "$current_dir" in
         "$HOME")
-            # Home directory - use default theme
-            $KITTY @ set-colors ~/.config/kitty/flatland.conf 2>/dev/null
+            echo "[Theme Switcher] Applying theme: Everforest Light Soft"
+            $KITTY @ set-colors "$HOME/.config/kitty/Everforest Light Soft.conf" 2>/dev/null
             ;;
         
-        # Active GitHub repositories (updated in last 3 months)
-        *"baba-is-win"*)
-            # Game project - use Tokyo Night theme
-            $KITTY @ set-colors ~/.config/kitty/tokyo-night.conf 2>/dev/null
+        *baba-is-win*)
+            echo "[Theme Switcher] Applying theme: Black Metal"
+            $KITTY @ set-colors "$HOME/.config/kitty/Black Metal.conf" 2>/dev/null
             ;;
-        *"SuperClaude"*)
-            # AI enhancement project - use 1984 Dark theme
-            $KITTY @ set-colors ~/.config/kitty/"1984 Dark.conf" 2>/dev/null
+        *SuperClaude*)
+            echo "[Theme Switcher] Applying theme: 1984 Dark"
+            $KITTY @ set-colors "$HOME/.config/kitty/1984 Dark.conf" 2>/dev/null
             ;;
-        *"chesscom-helper"*)
-            # Chess helper - use Tokyo Night theme
-            $KITTY @ set-colors ~/.config/kitty/tokyo-night.conf 2>/dev/null
+        *chesscom-helper*)
+            echo "[Theme Switcher] Applying theme: Monoindustrial"
+            $KITTY @ set-colors "$HOME/.config/kitty/Monoindustrial.conf" 2>/dev/null
             ;;
-        *"dotfiles"*)
-            # Dotfiles - use Red Sands theme
-            echo "[Theme Switcher] Matched dotfiles directory - switching to Red Sands theme"
-            $KITTY @ set-colors ~/.config/kitty/"Red Sands.conf" 2>/dev/null
-            if [ $? -eq 0 ]; then
-                echo "[Theme Switcher] Theme switch successful"
-            else
-                echo "[Theme Switcher] Theme switch failed - check if kitty remote control is enabled"
-            fi
+        *dotfiles*)
+            echo "[Theme Switcher] Applying theme: Red Sands"
+            $KITTY @ set-colors "$HOME/.config/kitty/Red Sands.conf" 2>/dev/null
             ;;
-        *"esquie"*)
-            # Esquie project - use 1984 Dark theme
-            $KITTY @ set-colors ~/.config/kitty/"1984 Dark.conf" 2>/dev/null
+        *esquie*)
+            echo "[Theme Switcher] Applying theme: Cobalt Neon"
+            $KITTY @ set-colors "$HOME/.config/kitty/Cobalt Neon.conf" 2>/dev/null
             ;;
-        *"anonymous-comment-box"*)
-            # Comment box - use Flatland theme
-            $KITTY @ set-colors ~/.config/kitty/flatland.conf 2>/dev/null
+        *anonymous-comment-box*)
+            echo "[Theme Switcher] Applying theme: Grass"
+            $KITTY @ set-colors "$HOME/.config/kitty/Grass.conf" 2>/dev/null
             ;;
-        *"emily-flambe"*)
-            # Personal project - use Tokyo Night theme
-            $KITTY @ set-colors ~/.config/kitty/tokyo-night.conf 2>/dev/null
+        *smart-tool-of-knowing*)
+            echo "[Theme Switcher] Applying theme: Flatland"
+            $KITTY @ set-colors "$HOME/.config/kitty/flatland.conf" 2>/dev/null
             ;;
-        *"llm-prompts"*)
-            # LLM prompts - use 1984 Dark theme
-            $KITTY @ set-colors ~/.config/kitty/"1984 Dark.conf" 2>/dev/null
+        *notes-for-goats*)
+            echo "[Theme Switcher] Applying theme: Tokyo Night"
+            $KITTY @ set-colors "$HOME/.config/kitty/tokyo-night.conf" 2>/dev/null
             ;;
-        *"smart-tool-of-knowing"*)
-            # Knowledge tool - use Flatland theme
-            $KITTY @ set-colors ~/.config/kitty/flatland.conf 2>/dev/null
-            ;;
-        *"notes-for-goats"*)
-            # Notes project - use Tokyo Night theme
-            $KITTY @ set-colors ~/.config/kitty/tokyo-night.conf 2>/dev/null
-            ;;
-        
         *)
             # Default - keep current theme
             echo "[Theme Switcher] No matching pattern for directory"
