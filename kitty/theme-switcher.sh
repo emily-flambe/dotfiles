@@ -52,6 +52,10 @@ switch_kitty_theme() {
             echo "[Theme Switcher] Applying theme: Flatland"
             $KITTY @ set-colors "$HOME/.config/kitty/flatland.conf" 2>/dev/null
             ;;
+        *list-cutter*)
+            echo "[Theme Switcher] Applying theme: fairyfloss"
+            $KITTY @ set-colors "$HOME/.config/kitty/fairyfloss.conf" 2>/dev/null
+            ;;
         *notes-for-goats*)
             echo "[Theme Switcher] Applying theme: Tokyo Night"
             $KITTY @ set-colors "$HOME/.config/kitty/tokyo-night.conf" 2>/dev/null
