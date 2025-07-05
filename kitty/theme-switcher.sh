@@ -64,3 +64,6 @@ switch_kitty_theme() {
 cd() {
     builtin cd "$@" && switch_kitty_theme
 }
+
+# Also run theme switch on shell startup
+switch_kitty_theme
