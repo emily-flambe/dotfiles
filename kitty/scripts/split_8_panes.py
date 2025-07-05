@@ -27,35 +27,40 @@ def handle_result(args, answer, target_window_id, boss):
     # Step 1: Create horizontal split (top and bottom halves)
     boss.launch('--location=hsplit', f'--cwd={cwd}')
     
-    # Step 2: Split bottom half into 4 panes
-    # First vertical split in bottom
-    boss.launch('--location=vsplit', f'--cwd={cwd}')
-    # Second vertical split in bottom-right
+    # Step 2: Split top half into 4 panes
+    # The original window (index 0) is now the top half
+    windows = list(tab.windows)
+    boss.set_active_window(windows[0])
+    
+    # First vertical split in top half
     boss.launch('--location=vsplit', f'--cwd={cwd}')
     
-    # Move to bottom-left (window index 2)
+    # Move to the newly created right pane and split it
     windows = list(tab.windows)
-    if len(windows) >= 4:
-        boss.set_active_window(windows[2])
-        # Third vertical split in bottom-left
-        boss.launch('--location=vsplit', f'--cwd={cwd}')
+    boss.set_active_window(windows[2])
+    boss.launch('--location=vsplit', f'--cwd={cwd}')
     
-    # Step 3: Move to top half and split into 4 panes
+    # Move to the far-right pane and split it
     windows = list(tab.windows)
-    if len(windows) >= 5:
-        # Focus on the first window (the original top pane)
-        boss.set_active_window(windows[0])
-        
-        # First vertical split in top
-        boss.launch('--location=vsplit', f'--cwd={cwd}')
-        # Second vertical split in top-right
-        boss.launch('--location=vsplit', f'--cwd={cwd}')
-        
-        # Move to top-left (window index 0)
-        windows = list(tab.windows)
-        if len(windows) >= 7:
-            boss.set_active_window(windows[0])
-            # Third vertical split in top-left
-            boss.launch('--location=vsplit', f'--cwd={cwd}')
+    boss.set_active_window(windows[3])
+    boss.launch('--location=vsplit', f'--cwd={cwd}')
+    
+    # Step 3: Split bottom half into 4 panes
+    # The bottom half is at index 1
+    windows = list(tab.windows)
+    boss.set_active_window(windows[1])
+    
+    # First vertical split in bottom half
+    boss.launch('--location=vsplit', f'--cwd={cwd}')
+    
+    # Move to the newly created right pane and split it
+    windows = list(tab.windows)
+    boss.set_active_window(windows[6])
+    boss.launch('--location=vsplit', f'--cwd={cwd}')
+    
+    # Move to the far-right pane and split it
+    windows = list(tab.windows)
+    boss.set_active_window(windows[7])
+    boss.launch('--location=vsplit', f'--cwd={cwd}')
 
 handle_result.no_ui = True
