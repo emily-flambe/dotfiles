@@ -2,6 +2,8 @@
 
 Personal configuration files for macOS development environment.
 
+This is how you know I am a serious person!
+
 ## Overview
 
 This repository contains configuration files and setup scripts for:
