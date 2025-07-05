@@ -48,5 +48,21 @@ def handle_result(args, answer, target_window_id, boss):
     if len(windows) >= 5:
         boss.set_active_window(windows[0])
         boss.launch('--location=vsplit', f'--cwd={cwd}')
+    
+    # Select the lower left pane and split it vertically
+    # After all the splits so far, let's use window indices
+    # The original bottom-left should be around index 2 or 3
+    windows = list(tab.windows)
+    if len(windows) >= 6:
+        # Try window 2 which should be in the bottom row
+        boss.set_active_window(windows[2])
+        # Now split vertically
+        boss.launch('--location=vsplit', f'--cwd={cwd}')
+    
+    # Final step: move 2 panes to the left and split
+    boss.active_tab.neighboring_window('left')
+    boss.active_tab.neighboring_window('left')
+    # Split vertically for the 8th pane
+    boss.launch('--location=vsplit', f'--cwd={cwd}')
 
 handle_result.no_ui = True
