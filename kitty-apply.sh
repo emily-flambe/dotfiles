@@ -41,11 +41,19 @@ if [ -f "$KITTY_SOURCE_DIR/theme-switcher.sh" ]; then
     chmod +x "$KITTY_CONFIG_DIR/theme-switcher.sh"
 fi
 
-# Install split-8-panes script (if it exists)
-if [ -f "$KITTY_SOURCE_DIR/split-8-panes.sh" ]; then
-    echo "Installing split-8-panes script..."
-    cp "$KITTY_SOURCE_DIR/split-8-panes.sh" "$KITTY_CONFIG_DIR/split-8-panes.sh"
-    chmod +x "$KITTY_CONFIG_DIR/split-8-panes.sh"
+# Install scripts directory
+if [ -d "$KITTY_SOURCE_DIR/scripts" ]; then
+    echo "Installing scripts directory..."
+    mkdir -p "$KITTY_CONFIG_DIR/scripts"
+    cp -r "$KITTY_SOURCE_DIR/scripts/"* "$KITTY_CONFIG_DIR/scripts/"
+    chmod +x "$KITTY_CONFIG_DIR/scripts/"*.sh "$KITTY_CONFIG_DIR/scripts/"*.py 2>/dev/null || true
+fi
+
+# Install Python kittens
+if ls "$KITTY_SOURCE_DIR/"*.py 1> /dev/null 2>&1; then
+    echo "Installing Python kittens..."
+    cp "$KITTY_SOURCE_DIR/"*.py "$KITTY_CONFIG_DIR/"
+    chmod +x "$KITTY_CONFIG_DIR/"*.py
 fi
 
 # Make sure permissions are correct
@@ -54,12 +62,17 @@ chmod 644 "$KITTY_CONFIG_DIR/kitty.conf"
 echo "Kitty configuration installed successfully!"
 echo "Configuration location: $KITTY_CONFIG_DIR/kitty.conf"
 
-# Reload theme-switcher if it's already sourced
-if type switch_kitty_theme &>/dev/null; then
-    echo ""
-    echo "Reloading theme-switcher script..."
-    source "$KITTY_CONFIG_DIR/theme-switcher.sh"
-    echo "Theme switcher reloaded!"
+# Reload theme-switcher if we're in an interactive shell
+if [[ $- == *i* ]]; then
+    if [ -n "$KITTY_WINDOW_ID" ]; then
+        echo ""
+        echo "Reloading theme-switcher script..."
+        source "$KITTY_CONFIG_DIR/theme-switcher.sh"
+        echo "Theme switcher reloaded!"
+    else
+        echo ""
+        echo "Note: Run 'source ~/.zshrc' in your kitty terminal to activate the theme switcher."
+    fi
 fi
 
 echo ""
