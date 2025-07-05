@@ -4,11 +4,14 @@ Personal configuration files for macOS development environment.
 
 This is how you know I am a serious person!
 
+
 ## Overview
 
 This repository contains configuration files and setup scripts for:
 - **[Kitty Terminal](https://sw.kovidgoyal.net/kitty/)** - GPU-accelerated terminal emulator with custom layouts and themes
 - **[AeroSpace](https://github.com/nikitabobko/AeroSpace)** - Tiling window manager for macOS with workspace management
+- **Claude Code** - [My fork of SuperClaude](https://github.com/emily-flambe/SuperClaude) contains my own deranged set of custom configurations and commands.
+
 
 ## Prerequisites
 
