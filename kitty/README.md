@@ -24,16 +24,17 @@
 
 ```
 kitty/
-├── README.md           # This file
-├── kitty.conf         # Main configuration
-├── theme-switcher.sh  # Automatic theme switching script
-├── themes/            # Color theme files
+├── README.md                      # This file
+├── kitty.conf                     # Main configuration
+├── theme-switcher.sh              # Automatic theme switching script
+├── private-projects.conf.example  # Example private project configuration
+├── themes/                        # Color theme files
 │   ├── flatland.conf
 │   ├── tokyo-night.conf
-│   ├── Nightfly.conf
+│   ├── Neowave.conf
 │   ├── Red Sands.conf
 │   └── ...
-└── scripts/           # Helper scripts
+└── scripts/                       # Helper scripts
     ├── split_4_panes.py
     └── split_8_panes.py
 ```
@@ -57,10 +58,35 @@ kitty/
 ### Automatic Theme Switching
 
 The theme-switcher automatically changes themes when navigating directories:
-- Home directory (`~`) - Flatland theme
-- `*baba-is-win*` projects - Tokyo Night theme
-- `*dotfiles*` projects - Flatland theme
 
+**Public Project Mappings:**
+- Home directory (`~`) - Everforest Light Soft theme
+- `*baba-is-win*` projects - Black Metal theme
+- `*SuperClaude*` projects - 1984 Dark theme
+- `*dotfiles*` projects - Red Sands theme
+- `*esquie*` projects - Cobalt Neon theme
+- `*cloudflare-ai-worker*` projects - Mona Lisa theme
+
+**Private Project Support:**
+For work or private projects that you don't want tracked in version control, you can create a local `private-projects.conf` file:
+
+1. Copy the example file:
+   ```bash
+   cp ~/.config/kitty/private-projects.conf.example ~/.config/kitty/private-projects.conf
+   ```
+
+2. Edit `private-projects.conf` to add your private project mappings:
+   ```bash
+   # Example: Map work projects to specific themes
+   *my-work-project*) 
+       $KITTY @ set-colors "$HOME/.config/kitty/Neowave.conf" 2>/dev/null
+       return 0
+       ;;
+   ```
+
+3. The private config file is automatically gitignored to keep project names private.
+
+**Setup:**
 To enable automatic switching:
 ```bash
 source ~/.config/kitty/theme-switcher.sh
@@ -69,7 +95,7 @@ source ~/.config/kitty/theme-switcher.sh
 To manually switch themes:
 ```bash
 kitty @ set-colors ~/.config/kitty/themes/flatland.conf
-kitty @ set-colors ~/.config/kitty/themes/tokyo-night.conf
+kitty @ set-colors ~/.config/kitty/themes/Neowave.conf
 ```
 
 ## Keyboard Shortcuts
