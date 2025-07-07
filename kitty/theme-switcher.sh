@@ -4,6 +4,26 @@
 # Path to kitty executable
 KITTY="/Applications/kitty.app/Contents/MacOS/kitty"
 
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Function to try private project theme mappings
+# Returns 0 if a match was found and theme was set, 1 if no match
+try_private_theme() {
+    local current_dir="$1"
+    local private_config="$SCRIPT_DIR/private-projects.conf"
+    
+    # Check if private config exists
+    if [ ! -f "$private_config" ]; then
+        return 1
+    fi
+    
+    # Source the private config and check for matches
+    # The private config should define cases that return 0 for matches
+    source "$private_config" "$current_dir"
+    return $?
+}
+
 # Function to switch kitty theme based on current directory
 switch_kitty_theme() {
     # Check if we're running in kitty
@@ -13,7 +33,12 @@ switch_kitty_theme() {
     
     local current_dir="$(pwd)"
     
-    # Define directory -> theme mappings
+    # Try private project mappings first
+    if try_private_theme "$current_dir"; then
+        return
+    fi
+    
+    # Define directory -> theme mappings (public projects)
     case "$current_dir" in
         "$HOME")
             $KITTY @ set-colors "$HOME/.config/kitty/Everforest Light Soft.conf" 2>/dev/null
