@@ -46,6 +46,9 @@ switch_kitty_theme() {
         *notes-for-goats*)
             $KITTY @ set-colors "$HOME/.config/kitty/tokyo-night.conf" 2>/dev/null
             ;;
+        *cloudflare-ai-worker*)
+            $KITTY @ set-colors "$HOME/.config/kitty/Mona Lisa.conf" 2>/dev/null
+            ;;
         *)
             # Default - keep current theme
             ;;
