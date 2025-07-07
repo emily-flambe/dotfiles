@@ -18,9 +18,11 @@ try_private_theme() {
         return 1
     fi
     
-    # Source the private config and check for matches
-    # The private config should define cases that return 0 for matches
-    source "$private_config" "$current_dir"
+    # Source the private config to load the function
+    source "$private_config"
+    
+    # Call the private projects function
+    check_private_projects "$current_dir"
     return $?
 }
 
