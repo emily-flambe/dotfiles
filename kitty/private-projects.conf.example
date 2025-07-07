@@ -1,0 +1,66 @@
+#!/bin/bash
+# Example private project theme mappings
+# Copy this file to private-projects.conf and customize for your projects
+# 
+# USAGE:
+#   cp private-projects.conf.example private-projects.conf
+#   edit private-projects.conf  # Add your private project mappings
+#
+# This file shows you how to configure private project theme switching
+# that won't be tracked in git to keep work project names confidential.
+
+# Function to handle private project theme switching
+# Takes current directory as parameter  
+# Returns 0 if theme was set, 1 if no match found
+check_private_projects() {
+    local current_dir="$1"
+    
+    case "$current_dir" in
+        # Example work projects - replace with your actual project names
+        *my-company-backend*)
+            $KITTY @ set-colors "$HOME/.config/kitty/Neowave.conf" 2>/dev/null
+            return 0
+            ;;
+        *client-dashboard*)
+            $KITTY @ set-colors "$HOME/.config/kitty/1984 Dark.conf" 2>/dev/null
+            return 0
+            ;;
+        *proprietary-app*)
+            $KITTY @ set-colors "$HOME/.config/kitty/Black Metal.conf" 2>/dev/null
+            return 0
+            ;;
+        *internal-tools*)
+            $KITTY @ set-colors "$HOME/.config/kitty/Cobalt Neon.conf" 2>/dev/null
+            return 0
+            ;;
+        
+        # Add more private project mappings here
+        # Pattern: *project-name-pattern*)
+        #     $KITTY @ set-colors "$HOME/.config/kitty/theme-name.conf" 2>/dev/null
+        #     return 0
+        #     ;;
+        
+        *)
+            # No match found for private projects
+            return 1
+            ;;
+    esac
+}
+
+# Available themes in your themes/ directory:
+# - 1984 Dark.conf
+# - Black Metal.conf  
+# - Cobalt Neon.conf
+# - Everforest Light Soft.conf
+# - Grass.conf
+# - Mona Lisa.conf
+# - Monoindustrial.conf
+# - Neowave.conf
+# - Nightfly.conf
+# - Red Sands.conf
+# - current-theme.conf
+# - fairyfloss.conf
+# - flatland.conf
+# - noirbuddy-oxide.conf
+# - pink lavender.conf
+# - tokyo-night.conf
