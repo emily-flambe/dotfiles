@@ -5,7 +5,7 @@
 KITTY="/Applications/kitty.app/Contents/MacOS/kitty"
 
 # Get the directory where this script is located
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$HOME/.config/kitty"
 
 # Function to try private project theme mappings
 # Returns 0 if a match was found and theme was set, 1 if no match
@@ -13,17 +13,25 @@ try_private_theme() {
     local current_dir="$1"
     local private_config="$SCRIPT_DIR/private-projects.conf"
     
+    echo "DEBUG: Checking private projects for: $current_dir"
+    echo "DEBUG: Private config path: $private_config"
+    
     # Check if private config exists
     if [ ! -f "$private_config" ]; then
+        echo "DEBUG: Private config file not found"
         return 1
     fi
     
+    echo "DEBUG: Private config file exists, sourcing..."
     # Source the private config to load the function
     source "$private_config"
     
+    echo "DEBUG: Calling check_private_projects function..."
     # Call the private projects function
     check_private_projects "$current_dir"
-    return $?
+    local result=$?
+    echo "DEBUG: check_private_projects returned: $result"
+    return $result
 }
 
 # Function to switch kitty theme based on current directory
