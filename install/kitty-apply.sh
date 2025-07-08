@@ -60,6 +60,30 @@ fi
 # Make sure permissions are correct
 chmod 644 "$KITTY_CONFIG_DIR/kitty.conf"
 
+# Add theme-switcher sourcing to shell config if not already present
+echo "Checking shell configuration for theme-switcher..."
+SHELL_CONFIG=""
+if [ -f "$HOME/.zshrc" ]; then
+    SHELL_CONFIG="$HOME/.zshrc"
+elif [ -f "$HOME/.bashrc" ]; then
+    SHELL_CONFIG="$HOME/.bashrc"
+elif [ -f "$HOME/.bash_profile" ]; then
+    SHELL_CONFIG="$HOME/.bash_profile"
+fi
+
+if [ -n "$SHELL_CONFIG" ]; then
+    SOURCE_LINE="source ~/.config/kitty/theme-switcher.sh"
+    if ! grep -q "source.*theme-switcher.sh" "$SHELL_CONFIG"; then
+        echo "Adding theme-switcher sourcing to $SHELL_CONFIG"
+        echo "" >> "$SHELL_CONFIG"
+        echo "# Kitty theme switcher" >> "$SHELL_CONFIG"
+        echo "$SOURCE_LINE" >> "$SHELL_CONFIG"
+        echo "Theme-switcher sourcing added to $SHELL_CONFIG"
+    else
+        echo "Theme-switcher already sourced in $SHELL_CONFIG"
+    fi
+fi
+
 echo "Kitty configuration installed successfully!"
 echo "Configuration location: $KITTY_CONFIG_DIR/kitty.conf"
 
@@ -74,6 +98,9 @@ if [[ $- == *i* ]]; then
         echo ""
         echo "Note: Run 'source ~/.zshrc' in your kitty terminal to activate the theme switcher."
     fi
+else
+    echo ""
+    echo "Note: Start a new terminal session to activate the theme switcher."
 fi
 
 echo ""
