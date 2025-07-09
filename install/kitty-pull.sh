@@ -39,6 +39,12 @@ for theme_file in "$KITTY_CONFIG_DIR"/*.conf; do
     fi
 done
 
+# Ensure private-projects.conf is synced if it exists
+if [ -f "$KITTY_CONFIG_DIR/private-projects.conf" ]; then
+    echo "  Syncing private-projects.conf..."
+    cp "$KITTY_CONFIG_DIR/private-projects.conf" "$KITTY_PROJECT_DIR/themes/private-projects.conf"
+fi
+
 # Sync any shell scripts
 if [ -f "$KITTY_CONFIG_DIR/theme-switcher.sh" ]; then
     echo "Syncing theme-switcher.sh..."
