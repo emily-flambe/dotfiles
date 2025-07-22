@@ -46,6 +46,10 @@ switch_kitty_theme() {
             $KITTY @ set-colors "$HOME/.config/kitty/Everforest Light Soft.conf" 2>/dev/null
             ;;
         
+        "$HOME/Documents/GitHub")
+            $KITTY @ set-colors "$HOME/.config/kitty/Ubuntu.conf" 2>/dev/null
+            ;;
+        
         *baba-is-win*)
             $KITTY @ set-colors "$HOME/.config/kitty/Black Metal.conf" 2>/dev/null
             ;;
