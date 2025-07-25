@@ -80,6 +80,9 @@ switch_kitty_theme() {
         *cloudflare-ai-worker*)
             $KITTY @ set-colors "$HOME/.config/kitty/Mona Lisa.conf" 2>/dev/null
             ;;
+        *cutty-agent*)
+            $KITTY @ set-colors "$HOME/.config/kitty/Atelier Lakeside Dark.conf" 2>/dev/null
+            ;;
         *)
             # Default - keep current theme
             ;;
