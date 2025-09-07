@@ -1,0 +1,60 @@
+{
+  "_comment": "Map directory paths or patterns to kitty theme names",
+  "_format": "Use exact paths for specific directories, or *pattern* for pattern matching",
+  "_themes": "Theme names should match the .conf files in the themes/ directory (without .conf extension)",
+
+  "mappings": [
+    {
+      "pattern": "*baba-is-win*",
+      "theme": "Black Metal"
+    },
+    {
+      "pattern": "*chat-bgd*",
+      "theme": "Grass"
+    },
+    {
+      "pattern": "*chesscom-helper*",
+      "theme": "Monoindustrial"
+    },
+    {
+      "pattern": "*cloudflare-ai-worker*",
+      "theme": "Mona Lisa"
+    },
+    {
+      "pattern": "*cutty-agent*",
+      "theme": "Atelier Lakeside Dark"
+    },
+    {
+      "pattern": "*dotfiles*",
+      "theme": "Red Sands"
+    },
+    {
+      "pattern": "*emoji-linter*",
+      "theme": "Cobalt Neon"
+    },
+    {
+      "pattern": "*list-cutter*",
+      "theme": "fairyfloss"
+    },
+    {
+      "pattern": "*naptime*",
+      "theme": "tokyo-night"
+    },
+    {
+      "pattern": "*SuperClaude*",
+      "theme": "1984 Dark"
+    },
+    {
+      "path": "$HOME/Documents/GitHub/games",
+      "theme": "Ollie"
+    },
+    {
+      "path": "$HOME",
+      "theme": "flatland"
+    },
+    {
+      "path": "$HOME/Documents/GitHub",
+      "theme": "Ubuntu"
+    }
+  ]
+}

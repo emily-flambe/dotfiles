@@ -1,0 +1,33 @@
+{
+  "project": {
+    "name": "dotfiles",
+    "type": "configuration",
+    "language": ["shell", "python", "toml"],
+    "platform": "macos"
+  },
+  "development": {
+    "testCommand": null,
+    "buildCommand": null,
+    "lintCommand": "shellcheck install/*.sh",
+    "installCommand": "./install/kitty-apply.sh"
+  },
+  "preferences": {
+    "indentation": {
+      "shell": 2,
+      "python": 4,
+      "toml": 2
+    },
+    "lineEndings": "unix",
+    "encoding": "utf-8"
+  },
+  "directories": {
+    "source": ["aerospace", "kitty", "install"],
+    "documentation": [".project", "README.md"],
+    "tests": null,
+    "output": null
+  },
+  "tools": {
+    "required": ["git", "bash"],
+    "optional": ["shellcheck", "python3"]
+  }
+}

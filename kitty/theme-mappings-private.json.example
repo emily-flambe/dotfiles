@@ -1,0 +1,20 @@
+{
+  "_comment": "Private theme mappings for work projects or sensitive directories",
+  "_instructions": "Copy this file to theme-mappings-private.json and add your private mappings",
+  "_note": "theme-mappings-private.json is gitignored and will not be committed",
+  
+  "mappings": [
+    {
+      "pattern": "*work-project-1*",
+      "theme": "Professional"
+    },
+    {
+      "pattern": "*client-project*",
+      "theme": "Corporate"
+    },
+    {
+      "path": "$HOME/Work/SecretProject",
+      "theme": "Stealth"
+    }
+  ]
+}

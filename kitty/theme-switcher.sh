@@ -1,5 +1,6 @@
 #!/bin/bash
 # Kitty Theme Switcher based on current directory
+# Uses JSON configuration files for theme mappings
 
 # Path to kitty executable
 KITTY="/Applications/kitty.app/Contents/MacOS/kitty"
@@ -7,23 +8,51 @@ KITTY="/Applications/kitty.app/Contents/MacOS/kitty"
 # Get the directory where this script is located
 SCRIPT_DIR="$HOME/.config/kitty"
 
-# Function to try private project theme mappings
-# Returns 0 if a match was found and theme was set, 1 if no match
-try_private_theme() {
+# Function to read JSON config and find matching theme
+find_theme_for_path() {
     local current_dir="$1"
-    local private_config="$SCRIPT_DIR/private-projects.conf"
+    local config_file="$2"
     
-    # Check if private config exists
-    if [ ! -f "$private_config" ]; then
+    # Check if config file exists
+    if [ ! -f "$config_file" ]; then
         return 1
     fi
     
-    # Source the private config to load the function
-    source "$private_config"
+    # Use Python for JSON parsing (reliable on macOS)
+    local theme=$(python3 -c "
+import json
+import os
+import re
+import sys
+
+try:
+    with open('$config_file', 'r') as f:
+        data = json.load(f)
+
+    current_dir = '$current_dir'
+    home_env = os.environ.get('HOME', '')
     
-    # Call the private projects function
-    check_private_projects "$current_dir"
-    return $?
+    for mapping in data.get('mappings', []):
+        if 'path' in mapping:
+            path = mapping['path'].replace('$' + 'HOME', home_env)
+            if current_dir == path:
+                print(mapping['theme'])
+                sys.exit(0)
+        elif 'pattern' in mapping:
+            pattern = mapping['pattern'].replace('*', '.*')
+            if re.search(pattern, current_dir):
+                print(mapping['theme'])
+                sys.exit(0)
+except Exception as e:
+    print(f'[ERROR] {e}', file=sys.stderr)
+" 2>/dev/null)
+    
+    if [ -n "$theme" ]; then
+        echo "$theme"
+        return 0
+    fi
+    
+    return 1
 }
 
 # Function to switch kitty theme based on current directory
@@ -34,63 +63,31 @@ switch_kitty_theme() {
     fi
     
     local current_dir="$(pwd)"
+    local theme=""
     
-    # Try private project mappings first
-    if try_private_theme "$current_dir"; then
-        return
+    # Try private mappings first
+    theme=$(find_theme_for_path "$current_dir" "$SCRIPT_DIR/theme-mappings-private.json")
+    
+    # If no private mapping found, try public mappings
+    if [ -z "$theme" ]; then
+        theme=$(find_theme_for_path "$current_dir" "$SCRIPT_DIR/theme-mappings.json")
     fi
     
-    # Define directory -> theme mappings (public projects)
-    case "$current_dir" in
-        "$HOME")
-            $KITTY @ set-colors "$HOME/.config/kitty/Everforest Light Soft.conf" 2>/dev/null
-            ;;
-        
-        "$HOME/Documents/GitHub")
-            $KITTY @ set-colors "$HOME/.config/kitty/Ubuntu.conf" 2>/dev/null
-            ;;
-        
-        "$HOME/Documents/GitHub/games")
-            $KITTY @ set-colors "$HOME/.config/kitty/Ollie.conf" 2>/dev/null
-            ;;
-        
-        *baba-is-win*)
-            $KITTY @ set-colors "$HOME/.config/kitty/Black Metal.conf" 2>/dev/null
-            ;;
-        *SuperClaude*)
-            $KITTY @ set-colors "$HOME/.config/kitty/1984 Dark.conf" 2>/dev/null
-            ;;
-        *chesscom-helper*)
-            $KITTY @ set-colors "$HOME/.config/kitty/Monoindustrial.conf" 2>/dev/null
-            ;;
-        *dotfiles*)
-            $KITTY @ set-colors "$HOME/.config/kitty/Red Sands.conf" 2>/dev/null
-            ;;
-        *esquie*)
-            $KITTY @ set-colors "$HOME/.config/kitty/Cobalt Neon.conf" 2>/dev/null
-            ;;
-        *anonymous-comment-box*)
-            $KITTY @ set-colors "$HOME/.config/kitty/Grass.conf" 2>/dev/null
-            ;;
-        *smart-tool-of-knowing*)
-            $KITTY @ set-colors "$HOME/.config/kitty/flatland.conf" 2>/dev/null
-            ;;
-        *list-cutter*)
-            $KITTY @ set-colors "$HOME/.config/kitty/fairyfloss.conf" 2>/dev/null
-            ;;
-        *notes-for-goats*)
-            $KITTY @ set-colors "$HOME/.config/kitty/tokyo-night.conf" 2>/dev/null
-            ;;
-        *cloudflare-ai-worker*)
-            $KITTY @ set-colors "$HOME/.config/kitty/Mona Lisa.conf" 2>/dev/null
-            ;;
-        *cutty-agent*)
-            $KITTY @ set-colors "$HOME/.config/kitty/Atelier Lakeside Dark.conf" 2>/dev/null
-            ;;
-        *)
-            # Default - keep current theme
-            ;;
-    esac
+    # Apply theme if found
+    if [ -n "$theme" ]; then
+        local theme_file="$SCRIPT_DIR/themes/${theme}.conf"
+        if [ -f "$theme_file" ]; then
+            $KITTY @ set-colors --reset 2>/dev/null
+            $KITTY @ set-colors "$theme_file" 2>/dev/null
+        else
+            # Try without themes/ prefix for backward compatibility
+            theme_file="$SCRIPT_DIR/${theme}.conf"
+            if [ -f "$theme_file" ]; then
+                $KITTY @ set-colors --reset 2>/dev/null
+                $KITTY @ set-colors "$theme_file" 2>/dev/null
+            fi
+        fi
+    fi
 }
 
 # Override cd to trigger theme switching
